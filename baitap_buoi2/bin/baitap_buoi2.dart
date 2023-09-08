@@ -103,7 +103,7 @@ void main(List<String> arguments) {
   ];
 
   print(
-      'Lỗi 3 do sMap đang khai báo cho phép value null nên sublist cần thêm kiểm tra khác null');
+      'Lỗi 3 do sMap đang khai báo cho phép value null nên sublist cần thêm kiểm tra khác null ');
 
   print(map);
 }
