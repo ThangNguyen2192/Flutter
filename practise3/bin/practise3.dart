@@ -28,9 +28,21 @@ void main(List<String> arguments) {
   late String strlate;
 
   //3. Viết 1 hàm tính giai thừa của 6
-  int so = 6;
-  print('Gia thừ của $so là ${tinhGiaiThua(so: so)}');
-  tinhGiaiThua(so: 5);
+  int socantinh = 6;
+  //--Cách 1
+  double giaithua = 1;
+  void tinhGiaiThua1({int so = 1}) {
+    if (so > 1) {
+      giaithua = giaithua * so;
+      tinhGiaiThua1(so: so - 1);
+    }
+  }
+
+  tinhGiaiThua1(so: socantinh);
+  print('Cách 1, Giai thừa của $socantinh là $giaithua');
+
+  //--Cách 2
+  print('Cách 2, Giai thừa của $socantinh là ${tinhGiaiThua(so: socantinh)}');
 
   //4. Viết các hàm chuyển đổi qua lại giữa string, int, double
   stringToint(str: '123.456');
