@@ -10,6 +10,7 @@ void main(List<String> args) {
 }
 
 void doiViTri(List<String> phones, int index1, int index2) {
+  if (index1 == index2) return;
   var temp = phones[index1];
   phones[index1] = phones[index2];
   phones[index2] = temp;
@@ -19,6 +20,7 @@ void doiViTri(List<String> phones, int index1, int index2) {
 }
 
 void doiViTri1(List<String> phones, int index1, int index2) {
+  if (index1 == index2) return;
   phones[index1] = phones[index1] + phones[index2];
   phones[index2] = phones[index1]
       .substring(0, phones[index1].length - phones[index2].length);
@@ -29,8 +31,8 @@ void doiViTri1(List<String> phones, int index1, int index2) {
 }
 
 void doiViTri2(List<String> phones, int index1, int index2) {
+  if (index1 == index2) return;
   List<int> arrhashcode = [...phones.map((e) => identityHashCode(e))];
-
   arrhashcode[index1] = arrhashcode[index1] ^ arrhashcode[index2];
   arrhashcode[index2] = arrhashcode[index1] ^ arrhashcode[index2];
   arrhashcode[index1] = arrhashcode[index1] ^ arrhashcode[index2];
