@@ -48,13 +48,3 @@ void doiViTri2(List<String> phones, int index1, int index2) {
   print('Cách 3:\n$arrnew');
   print(arrhashcode);
 }
-
-void swapWithoutTemp(List<int> list, int index1, int index2) {
-  if (index1 == index2) {
-    return;
-  }
-
-  list[index1] = list[index1] ^ list[index2];
-  list[index2] = list[index1] ^ list[index2];
-  list[index1] = list[index1] ^ list[index2];
-}
