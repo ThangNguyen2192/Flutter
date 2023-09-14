@@ -15,7 +15,7 @@ void main(List<String> args) {
   arrHocVien.add(HocVien(ten: 'E', arrLopHoc: [ios]));
   arrHocVien.add(HocVien(ten: 'F', arrLopHoc: [ios, web]));
 
-//--2. Tính toán số học viên thiếu
+  //--2. Tính toán số học viên thiếu
   print(
       'Số lượng học viên thiếu của lớp ${flutter.ten} là: ${flutter.remainMembers(arrHocVien)}');
   print(
@@ -25,7 +25,7 @@ void main(List<String> args) {
   print(
       'Số lượng học viên thiếu của lớp ${web.ten} là: ${web.remainMembers(arrHocVien)}');
 
-//--3. Khởi tạo học viên
+  //--3. Khởi tạo học viên
 
   List<HocVien> arrKhoiTaoFultter = flutter.Optional(arrHocVien);
   print('Danh sách học viên khởi tạo của lớp ${flutter.ten}: ${[
@@ -89,6 +89,8 @@ class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
     for (int i = 0; i < slthieu; i++) {
       int randomIndex = Random().nextInt(charset.length);
       String randomChar = charset[randomIndex];
+      charset = charset.replaceAll(randomChar, '');
+
       HocVien hvthem = HocVien(
           ten: randomChar,
           arrLopHoc: [LopHoc(ten: this.ten, soluong: this.soluong)]);
