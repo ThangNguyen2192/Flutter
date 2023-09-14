@@ -89,8 +89,7 @@ class LopHoc {
       int randomIndex = Random().nextInt(charset.length);
       String randomChar = charset[randomIndex];
       charset = charset.replaceAll(randomChar, '');
-      HocVien hvthem = HocVien(ten: randomChar, arrLopHoc: [this]);
-      arrNew.add(hvthem);
+      arrNew.add(HocVien(ten: randomChar, arrLopHoc: [this]));
     }
     // print('Danh sách học viên khởi tạo của lớp ${this.ten}: ${[
     //   ...arrNew.map((e) => e.ten)
