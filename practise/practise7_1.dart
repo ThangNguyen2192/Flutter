@@ -2,11 +2,11 @@ import 'dart:math';
 
 void main(List<String> args) {
   //1. diagrams
-  LopHoc flutter = LopHoc(ten: 'Flutter', soluong: 11);
-  LopHoc android = LopHoc(ten: 'android', soluong: 12);
-  LopHoc ios = LopHoc(ten: 'ios', soluong: 13);
-  LopHoc web = LopHoc(ten: 'web', soluong: 14);
 
+  Flutter flutter = Flutter();
+  Android android = Android();
+  Ios ios = Ios();
+  Web web = Web();
   List<HocVien> arrHocVien = [];
   arrHocVien.add(HocVien(ten: 'A', arrLopHoc: [flutter]));
   arrHocVien.add(HocVien(ten: 'B', arrLopHoc: [flutter, android]));
@@ -47,16 +47,15 @@ void main(List<String> args) {
 
 abstract class BuildAndroid {}
 
-abstract class BuildIos {}
+abstract class Buildios {}
 
 abstract class BuildWeb {}
 
 abstract class BuildDesktopApp {}
 
-class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
-  final String ten;
-  final int soluong;
-  LopHoc({required this.ten, required this.soluong});
+class LopHoc {
+  final String ten = '';
+  final int soluong = 0;
 
   ///Tính số lượng học viên thiếu
   int remainMembers(List<HocVien> arrHocVien) {
@@ -91,9 +90,7 @@ class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
       String randomChar = charset[randomIndex];
       charset = charset.replaceAll(randomChar, '');
 
-      HocVien hvthem = HocVien(
-          ten: randomChar,
-          arrLopHoc: [this]);
+      HocVien hvthem = HocVien(ten: randomChar, arrLopHoc: [this]);
 
       arrNew.add(hvthem);
     }
@@ -102,6 +99,35 @@ class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
     // ]}');
     return arrNew;
   }
+}
+
+class Flutter extends LopHoc
+    implements BuildAndroid, Buildios, BuildWeb, BuildDesktopApp {
+  @override
+  String get ten => 'Flutter';
+  @override
+  int get soluong => 11;
+}
+
+class Android extends LopHoc implements BuildAndroid {
+  @override
+  String get ten => 'Android';
+  @override
+  int get soluong => 12;
+}
+
+class Ios extends LopHoc implements Buildios {
+  @override
+  String get ten => 'ios';
+  @override
+  int get soluong => 13;
+}
+
+class Web extends LopHoc implements BuildWeb {
+  @override
+  String get ten => 'web';
+  @override
+  int get soluong => 14;
 }
 
 class HocVien {
