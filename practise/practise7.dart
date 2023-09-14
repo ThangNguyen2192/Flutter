@@ -45,17 +45,22 @@ void main(List<String> args) {
   ]}');
 }
 
+abstract class BuildAndroid {}
+
+abstract class BuildIos {}
+
+abstract class BuildWeb {}
+
+abstract class BuildDesktopApp {}
+
 class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
   final String ten;
   final int soluong;
   LopHoc({required this.ten, required this.soluong});
 
+  ///Tính số lượng học viên thiếu
   int remainMembers(List<HocVien> arrHocVien) {
     //--Lấy ra các học viên của lớp đang xử lý trong danh sách các học viên truyền vào
-    // List<HocVien> arrHocVienCuaLop = [
-    //   ...arrHocVien
-    //       .where((e) => ([...e.arrLopHoc.map((e) => e.ten)].contains(this.ten)))
-    // ];
     List<HocVien> arrHocVienCuaLop = [
       ...arrHocVien.where((e) => e.arrLopHoc.contains(this))
     ];
@@ -65,12 +70,8 @@ class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
     return slthieu;
   }
 
+  ///Khởi tạo toàn bộ học viên thiếu
   List<HocVien> Optional(List<HocVien> arrHocVien) {
-    //--Lấy ra các học viên của lớp đang xử lý trong danh sách các học viên truyền vào
-    // List<HocVien> arrNew = [
-    //   ...arrHocVien
-    //       .where((e) => ([...e.arrLopHoc.map((e) => e.ten)].contains(this.ten)))
-    // ];
     List<HocVien> arrNew = [
       ...arrHocVien.where((e) => e.arrLopHoc.contains(this))
     ];
@@ -101,43 +102,9 @@ class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
   }
 }
 
-abstract class BuildAndroid {}
-
-abstract class BuildIos {}
-
-abstract class BuildWeb {}
-
-abstract class BuildDesktopApp {}
-
 class HocVien {
   final String ten;
   final List<LopHoc> arrLopHoc;
 
   HocVien({required this.ten, required this.arrLopHoc});
 }
-/*
-class Flutter //extends LopHoc
-    implements
-        BuildAndroid,
-        BuildDesktopApp,
-        BuildIos,
-        BuildWeb {
-  @override
-  String ten = 'Flutter';
-  @override
-  int soluong = 11;
-
-  //Flutter({required super.ten, required super.soluong});
-}
-
-class Web extends LopHoc implements BuildWeb {
-  Web({required super.ten, required super.soluong});
-}
-
-class Android extends LopHoc implements BuildAndroid {
-  Android({required super.ten, required super.soluong});
-}
-
-class Ios extends LopHoc implements BuildIos {
-  Ios({required super.ten, required super.soluong});
-}*/
