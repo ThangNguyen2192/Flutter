@@ -2,78 +2,94 @@ import 'dart:math';
 
 void main(List<String> args) {
   //1. diagrams
+  HocVien A = HocVien(ten: 'A');
+  HocVien B = HocVien(ten: 'B');
+  HocVien C = HocVien(ten: 'C');
+  HocVien D = HocVien(ten: 'D');
+  HocVien E = HocVien(ten: 'E');
+  HocVien F = HocVien(ten: 'F');
 
-  Flutter flutter = Flutter();
-  Android android = Android();
-  Ios ios = Ios();
-  Web web = Web();
-  List<HocVien> arrHocVien = [];
-  arrHocVien.add(HocVien(ten: 'A', arrLopHoc: [flutter]));
-  arrHocVien.add(HocVien(ten: 'B', arrLopHoc: [flutter, android]));
-  arrHocVien.add(HocVien(ten: 'C', arrLopHoc: [android]));
-  arrHocVien.add(HocVien(ten: 'D', arrLopHoc: [android, ios]));
-  arrHocVien.add(HocVien(ten: 'E', arrLopHoc: [ios]));
-  arrHocVien.add(HocVien(ten: 'F', arrLopHoc: [ios, web]));
+  LopHoc flutter = LopHoc(ten: 'Flutter', soluong: 11);
+  flutter.arrHocVien = [A, B];
+  LopHoc android = LopHoc(ten: 'android', soluong: 12);
+  android.arrHocVien = [B, C, D];
+  LopHoc ios = LopHoc(ten: 'ios', soluong: 13);
+  ios.arrHocVien = [D, E, F];
+  LopHoc web = LopHoc(ten: 'web', soluong: 14);
+  web.arrHocVien = [F];
 
   //--2. Tính toán số học viên thiếu
   print(
-      'Số lượng học viên thiếu của lớp ${flutter.ten} là: ${flutter.remainMembers(arrHocVien)}');
+      'Số lượng học viên thiếu của lớp ${flutter.ten} là: ${flutter.remainMembers()}');
   print(
-      'Số lượng học viên thiếu của lớp ${android.ten} là: ${android.remainMembers(arrHocVien)}');
+      'Số lượng học viên thiếu của lớp ${android.ten} là: ${android.remainMembers()}');
   print(
-      'Số lượng học viên thiếu của lớp ${ios.ten} là: ${ios.remainMembers(arrHocVien)}');
+      'Số lượng học viên thiếu của lớp ${ios.ten} là: ${ios.remainMembers()}');
   print(
-      'Số lượng học viên thiếu của lớp ${web.ten} là: ${web.remainMembers(arrHocVien)}');
+      'Số lượng học viên thiếu của lớp ${web.ten} là: ${web.remainMembers()}');
 
   //--3. Khởi tạo học viên
 
-  List<HocVien> arrKhoiTaoFultter = flutter.Optional(arrHocVien);
+  List<HocVien> arrKhoiTaoFultter = flutter.Optional();
   print('Danh sách học viên khởi tạo của lớp ${flutter.ten}: ${[
     ...arrKhoiTaoFultter.map((e) => e.ten)
   ]}');
-  List<HocVien> arrKhoiTaoandroid = android.Optional(arrHocVien);
+  List<HocVien> arrKhoiTaoandroid = android.Optional();
   print('Danh sách học viên khởi tạo của lớp ${android.ten}: ${[
     ...arrKhoiTaoandroid.map((e) => e.ten)
   ]}');
-  List<HocVien> arrKhoiTaoios = ios.Optional(arrHocVien);
+  List<HocVien> arrKhoiTaoios = ios.Optional();
   print('Danh sách học viên khởi tạo của lớp ${ios.ten}: ${[
     ...arrKhoiTaoios.map((e) => e.ten)
   ]}');
-  List<HocVien> arrKhoiTaoweb = web.Optional(arrHocVien);
+  List<HocVien> arrKhoiTaoweb = web.Optional();
   print('Danh sách học viên khởi tạo của lớp ${web.ten}: ${[
     ...arrKhoiTaoweb.map((e) => e.ten)
   ]}');
+
+  //flutter.setSoBuoiHoc=10;
+  //print(flutter.getSoBuoiHoc);
 }
 
-abstract class BuildAndroid {}
+class Build {}
 
-abstract class Buildios {}
+class BuildAndroid extends Build {}
 
-abstract class BuildWeb {}
+abstract class BuildIos extends Build {}
 
-abstract class BuildDesktopApp {}
+abstract class BuildWeb extends Build {}
+
+abstract class BuildDesktopApp extends Build {}
 
 class LopHoc {
-  final String ten = '';
-  final int soluong = 0;
+  final String ten;
+  final int soluong;
+  int _soBuoiHoc = 0;
+  List<HocVien> arrHocVien = [];
+
+  LopHoc({required this.ten, required this.soluong});
+
+  int get getSoBuoiHoc => _soBuoiHoc;
+
+  set setSoBuoiHoc(int value) {
+    if (value < 10) {
+      throw Exception("Số buổi học không thể nhỏ hơn 10 buổi");
+    } else
+      _soBuoiHoc = value;
+    //_soBuoiHoc = value;
+  }
+  //LopHoc({required this.ten, required this.soluong});
 
   ///Tính số lượng học viên thiếu
-  int remainMembers(List<HocVien> arrHocVien) {
-    //--Lấy ra các học viên của lớp đang xử lý trong danh sách các học viên truyền vào
-    List<HocVien> arrHocVienCuaLop = [
-      ...arrHocVien.where((e) => e.arrLopHoc.contains(this))
-    ];
-
-    int slthieu = this.soluong - arrHocVienCuaLop.length;
-    //print('Số lượng học viên thiếu của lớp ${this.ten} là: $slthieu');
+  int remainMembers() {
+    int slthieu = this.soluong - this.arrHocVien.length;
+    if (slthieu < 0) slthieu = 0;
     return slthieu;
   }
 
   ///Khởi tạo toàn bộ học viên thiếu
-  List<HocVien> Optional(List<HocVien> arrHocVien) {
-    List<HocVien> arrNew = [
-      ...arrHocVien.where((e) => e.arrLopHoc.contains(this))
-    ];
+  List<HocVien> Optional() {
+    List<HocVien> arrNew = [...this.arrHocVien];
 
     //--Loại bỏ đi các tên đã có ở trong lớp
     String charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -82,14 +98,14 @@ class LopHoc {
     }
 
     //--Lấy ra số lượng thiếu của lớp
-    int slthieu = this.remainMembers(arrHocVien);
+    int slthieu = this.remainMembers();
 
     //Duyệt qua số lượng các học viên thiếu để thêm vào
     for (int i = 0; i < slthieu; i++) {
       int randomIndex = Random().nextInt(charset.length);
       String randomChar = charset[randomIndex];
       charset = charset.replaceAll(randomChar, '');
-      arrNew.add(HocVien(ten: randomChar, arrLopHoc: [this]));
+      arrNew.add(HocVien(ten: randomChar));
     }
     // print('Danh sách học viên khởi tạo của lớp ${this.ten}: ${[
     //   ...arrNew.map((e) => e.ten)
@@ -98,38 +114,9 @@ class LopHoc {
   }
 }
 
-class Flutter extends LopHoc
-    implements BuildAndroid, Buildios, BuildWeb, BuildDesktopApp {
-  @override
-  String get ten => 'Flutter';
-  @override
-  int get soluong => 11;
-}
-
-class Android extends LopHoc implements BuildAndroid {
-  @override
-  String get ten => 'Android';
-  @override
-  int get soluong => 12;
-}
-
-class Ios extends LopHoc implements Buildios {
-  @override
-  String get ten => 'ios';
-  @override
-  int get soluong => 13;
-}
-
-class Web extends LopHoc implements BuildWeb {
-  @override
-  String get ten => 'web';
-  @override
-  int get soluong => 14;
-}
-
 class HocVien {
   final String ten;
-  final List<LopHoc> arrLopHoc;
+  //final List<LopHoc> arrLopHoc;
 
-  HocVien({required this.ten, required this.arrLopHoc});
+  HocVien({required this.ten});
 }
