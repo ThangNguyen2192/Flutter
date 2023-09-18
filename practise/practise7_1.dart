@@ -22,6 +22,7 @@ class LopHoc {
       _soBuoiHoc = value;
   }
 
+  //Hàm cập nhật số buổi, đàu vào là hàm capNhatSoBuoiCacLopKhac để cập nhật tương ứng cho các lợp khác
   void capNhatSoBuoi(int soBuoiMoi, Function func) {
     this.setSoBuoiHoc = soBuoiMoi;
     func.call();
