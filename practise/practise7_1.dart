@@ -64,21 +64,9 @@ abstract class BuildDesktopApp extends Build {}
 class LopHoc {
   final String ten;
   final int soluong;
-  int _soBuoiHoc = 0;
   List<HocVien> arrHocVien = [];
 
   LopHoc({required this.ten, required this.soluong});
-
-  int get getSoBuoiHoc => _soBuoiHoc;
-
-  set setSoBuoiHoc(int value) {
-    if (value < 10) {
-      throw Exception("Số buổi học không thể nhỏ hơn 10 buổi");
-    } else
-      _soBuoiHoc = value;
-    //_soBuoiHoc = value;
-  }
-  //LopHoc({required this.ten, required this.soluong});
 
   ///Tính số lượng học viên thiếu
   int remainMembers() {
