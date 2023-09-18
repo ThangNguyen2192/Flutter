@@ -9,13 +9,22 @@ void main(List<String> args) {
   HocVien E = HocVien(ten: 'E');
   HocVien F = HocVien(ten: 'F');
 
-  LopHoc flutter = LopHoc(ten: 'Flutter', soluong: 11);
+  Build buildAndroid = Build(ten: 'Android');
+  Build buildIos = Build(ten: 'ios');
+  Build buildWeb = Build(ten: 'web');
+  Build buildDesktopApp = Build(ten: 'DesktopApp');
+
+  LopHoc flutter = LopHoc(
+      ten: 'Flutter',
+      soluong: 11,
+      arrBuild: [buildAndroid, buildIos, buildWeb, buildDesktopApp]);
   flutter.arrHocVien = [A, B];
-  LopHoc android = LopHoc(ten: 'android', soluong: 12);
+  LopHoc android =
+      LopHoc(ten: 'android', soluong: 12, arrBuild: [buildAndroid]);
   android.arrHocVien = [B, C, D];
-  LopHoc ios = LopHoc(ten: 'ios', soluong: 13);
+  LopHoc ios = LopHoc(ten: 'ios', soluong: 13, arrBuild: [buildIos]);
   ios.arrHocVien = [D, E, F];
-  LopHoc web = LopHoc(ten: 'web', soluong: 14);
+  LopHoc web = LopHoc(ten: 'web', soluong: 14, arrBuild: [buildWeb]);
   web.arrHocVien = [F];
 
   //--2. Tính toán số học viên thiếu
@@ -51,22 +60,18 @@ void main(List<String> args) {
   //print(flutter.getSoBuoiHoc);
 }
 
-class Build {}
-
-class BuildAndroid extends Build {}
-
-abstract class BuildIos extends Build {}
-
-abstract class BuildWeb extends Build {}
-
-abstract class BuildDesktopApp extends Build {}
+class Build {
+  final String ten;
+  Build({required this.ten});
+}
 
 class LopHoc {
   final String ten;
   final int soluong;
+  final List<Build> arrBuild;
   List<HocVien> arrHocVien = [];
 
-  LopHoc({required this.ten, required this.soluong});
+  LopHoc({required this.ten, required this.soluong, required this.arrBuild});
 
   ///Tính số lượng học viên thiếu
   int remainMembers() {
