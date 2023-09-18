@@ -2,10 +2,15 @@ import 'dart:math';
 
 void main(List<String> args) {
   //1. diagrams
-  LopHoc flutter = LopHoc(ten: 'Flutter', soluong: 11);
-  LopHoc android = LopHoc(ten: 'android', soluong: 12);
-  LopHoc ios = LopHoc(ten: 'ios', soluong: 13);
-  LopHoc web = LopHoc(ten: 'web', soluong: 14);
+  Build buildAndroid = Build(ten: 'Android');
+  Build buildIos = Build(ten: 'ios');
+  Build buildWeb = Build(ten: 'web');
+  Build buildDesktopApp = Build(ten: 'DesktopApp');
+
+  LopHoc flutter = LopHoc(ten: 'Flutter', soluong: 11,arrBuild: [buildAndroid,buildIos,buildWeb,buildDesktopApp]);
+  LopHoc android = LopHoc(ten: 'android', soluong: 12,arrBuild: [buildAndroid]);
+  LopHoc ios = LopHoc(ten: 'ios', soluong: 13,arrBuild: [buildIos]);
+  LopHoc web = LopHoc(ten: 'web', soluong: 14,arrBuild: [buildWeb]);
 
   List<HocVien> arrHocVien = [];
   arrHocVien.add(HocVien(ten: 'A', arrLopHoc: [flutter]));
@@ -43,20 +48,23 @@ void main(List<String> args) {
   print('Danh sách học viên khởi tạo của lớp ${web.ten}: ${[
     ...arrKhoiTaoweb.map((e) => e.ten)
   ]}');
+
+  //flutter.setSoBuoiHoc=10;
+  //print(flutter.getSoBuoiHoc);
 }
 
-abstract class BuildAndroid {}
+class Build {
+  final String ten;
 
-abstract class BuildIos {}
+  Build({required this.ten});
+}
 
-abstract class BuildWeb {}
-
-abstract class BuildDesktopApp {}
-
-class LopHoc implements BuildAndroid, BuildDesktopApp, BuildIos, BuildWeb {
+class LopHoc {
   final String ten;
   final int soluong;
-  LopHoc({required this.ten, required this.soluong});
+  final List<Build> arrBuild;
+
+  LopHoc({required this.ten, required this.soluong, required this.arrBuild});
 
   ///Tính số lượng học viên thiếu
   int remainMembers(List<HocVien> arrHocVien) {
