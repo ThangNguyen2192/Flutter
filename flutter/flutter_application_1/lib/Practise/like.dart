@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(
-        title: 'Home Work',
+        title: 'Homework',
       ),
     );
   }
@@ -56,7 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // backgroundColor: Colors.green,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         flexibleSpace: const SizedBox(
           height: 50,
         ),
