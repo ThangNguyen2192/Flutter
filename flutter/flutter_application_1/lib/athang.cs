@@ -21,9 +21,28 @@ floatingActionButton: FloatingActionButton(
           color: Colors.white,
         ),
       ),
-
+nút có icon và text
   ElevatedButton.icon(
        onPressed: () {},
+       child: ElevatedButton.icon(
+                              onPressed: _setLikeColor,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,//--độ cao của bóng nút =0 là coi như trong suốt
+                                side: const BorderSide(
+                                    style: BorderStyle.none,
+                                    color: Colors.white),
+                                backgroundColor: Colors
+                                    .white, // Set the button background color to transparent
+                              ),
+                              icon: Icon(
+                                Icons.favorite,
+                                color: _likeColor,
+                              ), // Use the heart icon
+                              label: const Text(
+                                'Like',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
        style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors
                                     .transparent, // Set the button background color to transparent

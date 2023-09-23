@@ -53,8 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.green,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.blue,
         title: Text(widget.title),
         flexibleSpace: const SizedBox(
           height: 50,
@@ -64,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           const Expanded(
               child: Image(
@@ -88,6 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: _setLikeColor,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                              ),
                               icon: Icon(
                                 Icons.favorite,
                                 color: _likeColor,
@@ -100,11 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Expanded(
                             child: ElevatedButton.icon(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white)),
                               onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                              ),
                               icon: const Icon(
                                 Icons.comment,
                                 color: Colors.black,
@@ -118,6 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                              ),
                               icon: const Icon(
                                 Icons.share,
                                 color: Colors.black,
