@@ -1,3 +1,9 @@
+//list view
+https://www.youtube.com/watch?v=q5wDHkVgTkw&list=PLRhlTlpDUWsxWhGA4jTr0oGeNs7xYyDPW&index=12
+https://www.youtube.com/watch?v=kLfgeNKX0Qs&list=PLv6GftO355AvO_rrcm5F7gTBHLTjV0oD5
+
+cai dat va viet todo list
+https://www.youtube.com/watch?v=Hadc-GBPsmY&list=PLv6GftO355AsxyLjGVkpOmN8DUbcPdIBv
 
 //Khai baos image
 Child: Image(
@@ -152,3 +158,7 @@ Center(
                     ))
                   ],
                 )),
+
+//--- Mở bàn phím lên là object tự đẩy lên trên
+Padding(
+                  padding: MediaQuery.of(context).viewInsets,//--

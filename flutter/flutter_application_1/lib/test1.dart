@@ -62,7 +62,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.blue,
-        onPressed: _incrementCounter,
+        // onPressed: _incrementCounter,
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              print(context);
+              return Container(
+                height: 200,
+                color: Colors.white,
+              );
+            },
+          );
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
