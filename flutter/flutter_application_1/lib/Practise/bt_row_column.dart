@@ -121,16 +121,13 @@ class MyApp extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                color: Colors.yellow,
+                alignment: Alignment.topCenter,
+                //color: Colors.yellow,
                 child: const Image(
                     fit: BoxFit.fill,
                     image: NetworkImage(
                         "https://haycafe.vn/wp-content/uploads/2023/01/Hinh-anh-thien-nhien-dep-nhat.jpeg")),
               ),
-              // child: Image(
-              //     fit: BoxFit.fill,
-              //     image: NetworkImage(
-              //         "https://haycafe.vn/wp-content/uploads/2023/01/Hinh-anh-thien-nhien-dep-nhat.jpeg")),
             ),
             // const Image(
             //     fit: BoxFit.fill,

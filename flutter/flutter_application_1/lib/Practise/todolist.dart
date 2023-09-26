@@ -85,8 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            print(context);
+            //print(context);
             showModalBottomSheet(
+              // backgroundColor: Colors.yellow,
+              shape: const BeveledRectangleBorder(
+                  // borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
               isScrollControlled: true, //quay ngang vẫn show được
               context: context,
               builder: (BuildContext context) {
@@ -94,10 +98,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: MediaQuery.of(context)
                       .viewInsets, //Mở bàn phím lên mà k bị che mất đi text và nút
                   child: Container(
+                    decoration: const BoxDecoration(
+                        // color: Colors.white,
+                        // borderRadius: BorderRadius.all(Radius.circular(20)),
+                        // borderRadius: BorderRadius.all(
+                        //     Radius.circular(20)), // bo 4 góc 20px
+                        ),
                     // height: 200,
-                    color: Colors.white,
+
                     child: Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(20),
                       child: SingleChildScrollView(
                         //--Quay ngang thì chuyển sang cuộn để k lỗi
                         child: Column(
@@ -188,7 +198,10 @@ class TodoWidget extends StatelessWidget {
                   }
                   // return print('pressedCancel');
                 },
-                child: const Icon(Icons.delete)),
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                )),
           ],
         ),
       ),

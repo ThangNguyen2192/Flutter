@@ -5,6 +5,8 @@ https://www.youtube.com/watch?v=kLfgeNKX0Qs&list=PLv6GftO355AvO_rrcm5F7gTBHLTjV0
 cai dat va viet todo list
 https://www.youtube.com/watch?v=Hadc-GBPsmY&list=PLv6GftO355AsxyLjGVkpOmN8DUbcPdIBv
 
+//--Tài liệu về Flutter
+https://cafedev.vn/series-tu-hoc-flutter-tu-co-ban-toi-nang-cao/
 //Khai baos image
 Child: Image(
     fit: BoxFit.cover,
