@@ -15,6 +15,49 @@ Child: Image(
     image: NetworkImage(
      "https://haycafe.vn/wp-content/uploads/2023/01/Hinh-anh-thien-nhien-dep-nhat.jpeg"))),
 
+
+//--Text field
+child: TextField(
+                    textAlignVertical: TextAlignVertical
+                        .bottom, // Center vertically Căn cho chữ luôn ở giữa dòng theo chiều đứng
+                    controller: textSearch,
+                    style: const TextStyle(fontSize: 18),
+                    // textAlign: TextAlign.left,
+                    // textAlign: TextAlign.mid,
+                    decoration: const InputDecoration(
+                      // icon: Icon(Icons.search),
+                      prefixIcon: Icon(Icons.search),
+                      // prefixIconColor: Colors.black,
+                      hintText: "Tìm kiếm",
+
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 223, 206, 206),
+                      // labelText: "Tìm kiếm",
+                      //labelStyle: TextStyle(color: Colors.black),
+                      // border: InputBorder.none,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(14)),
+                          borderSide: BorderSide.none
+                          // borderSide:
+                          //borderSide: BorderSide(),
+                          ),
+                      // contentPadding: EdgeInsets.all(10),
+                      //enabledBorder: OutlineInputBorder.none,
+                      // focusedBorder: OutlineInputBorder(
+                      //     //borderSide: BorderSide(color: Colors.black),
+                      //     ),
+                    ),
+                    onChanged: (value) {
+                      _maxindex = 0;
+                      setState(() {});
+                    },
+                    onEditingComplete: () {
+                      print("v");
+                    },
+                    onSubmitted: (value) {
+                      print("su");
+                    },
+                  ),
 //-- The nut bo tron         
 floatingActionButton: FloatingActionButton(
          shape: RoundedRectangleBorder(

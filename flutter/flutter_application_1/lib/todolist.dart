@@ -29,8 +29,23 @@ class _MyHomePageState extends State<MyHomePage> {
     TodoClass(id: '2', name: 'Đi chơi'),
     TodoClass(id: '3', name: 'Đi học'),
   ];
+  int _maxindex = 0;
 
   TextEditingController textController = TextEditingController();
+  TextEditingController textSearch = TextEditingController();
+
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _onIconClick() {
+    // Request focus on the TextField when the icon is clicked
+    FocusScope.of(context).requestFocus(_focusNode);
+  }
 
   void ThemMoi() {
     if (textController.text.isNotEmpty) {
@@ -59,21 +74,107 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _isSearching = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text(
-            "TodoList",
-            style: TextStyle(fontSize: 30),
-          ),
-        ),
+        appBar: !_isSearching
+            ? AppBar(
+                backgroundColor: Colors.blue,
+                title: const Text(
+                  "TodoList",
+                  style: TextStyle(fontSize: 30),
+                ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        _isSearching = true;
+                        setState(() {});
+                        _onIconClick;
+                      },
+                      icon: const Icon(Icons.search))
+                ],
+              )
+            : AppBar(
+                backgroundColor: Colors.blue,
+                leading: IconButton(
+                    onPressed: () {
+                      _isSearching = false;
+                      textSearch.clear();
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_new)),
+                title: SizedBox(
+                  height: 40,
+                  //margin: const EdgeInsets.all(20),
+                  // height: 46,
+                  child: Focus(
+                    focusNode: _focusNode,
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical
+                          .bottom, // Center vertically Căn cho chữ luôn ở giữa dòng theo chiều đứng
+                      controller: textSearch,
+                      style: const TextStyle(fontSize: 18),
+                      // textAlign: TextAlign.left,
+                      // textAlign: TextAlign.mid,
+                      decoration: const InputDecoration(
+                        // icon: Icon(Icons.search),
+                        prefixIcon: Icon(Icons.search),
+                        // prefixIconColor: Colors.black,
+                        hintText: "Tìm kiếm",
+
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 223, 206, 206),
+                        // labelText: "Tìm kiếm",
+                        //labelStyle: TextStyle(color: Colors.black),
+                        // border: InputBorder.none,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(14)),
+                            borderSide: BorderSide.none
+                            // borderSide:
+                            //borderSide: BorderSide(),
+                            ),
+                        // contentPadding: EdgeInsets.all(10),
+                        //enabledBorder: OutlineInputBorder.none,
+                        // focusedBorder: OutlineInputBorder(
+                        //     //borderSide: BorderSide(color: Colors.black),
+                        //     ),
+                      ),
+                      onChanged: (value) {
+                        _maxindex = 0;
+                        setState(() {});
+                      },
+                      onEditingComplete: () {
+                        print("v");
+                      },
+                      onSubmitted: (value) {
+                        print("su");
+                      },
+                    ),
+                  ),
+                ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        textSearch.clear();
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.clear))
+                ],
+                // title: const Text(
+                //   "TodoList1",
+                //   style: TextStyle(fontSize: 30),
+                // ),
+              ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
                 children: todoList
+                    .where((e) => (e.name
+                            .toLowerCase()
+                            .contains(textSearch.text.toLowerCase()) ||
+                        (_maxindex > 0 && todoList.indexOf(e) >= _maxindex)))
                     .map((e) => TodoWidget(
                           id: e.id,
                           name: e.name,
@@ -85,6 +186,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            _maxindex = todoList.length;
+            print(_maxindex);
             //print(context);
             showModalBottomSheet(
               // backgroundColor: Colors.yellow,
