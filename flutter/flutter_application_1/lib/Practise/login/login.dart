@@ -84,6 +84,36 @@ class _SigninPageState extends State<SigninPage> {
         // ),
         body: Stack(children: [
           const BackgroundStack(),
+          const Positioned(
+            top: 97,
+            left: 96,
+            right: 96,
+            child: SizedBox(
+              //width: 131,
+              height: 131,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Login here",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1F41BB)),
+                    ),
+                    Text(
+                      "Welcome back you’ve"
+                      "\nbeen missed!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF000000),
+                      ),
+                    )
+                  ]),
+            ),
+          ),
           Positioned(
             left: 31,
             right: 31,
