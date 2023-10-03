@@ -25,6 +25,7 @@ class BackgroundStack extends StatelessWidget {
           height: 635,
           boxShape: BoxShape.circle,
           backgroundColor: const Color(0xFFF8F9FF),
+          // backgroundColor: const Color.fromARGB(255, 239, 235, 240),
         ),
         Cubes(left: -306, top: 634, width: 371, height: 372),
         Cubes(
@@ -86,26 +87,34 @@ class Cubes extends StatelessWidget {
 }
 
 class TextBox extends StatelessWidget {
-  TextBox(
-      {super.key,
-      required this.text,
-      this.color = const Color(0xFF1F41BB),
-      this.alignment,
-      this.margin});
+  TextBox({
+    super.key,
+    required this.text,
+    this.color = const Color(0xFF1F41BB),
+    this.alignment,
+    this.margin,
+    this.onTap,
+  });
   String text;
   Color? color;
   AlignmentGeometry? alignment;
   EdgeInsetsGeometry? margin;
+  Function? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: alignment,
       margin: margin,
       // margin: const EdgeInsets.only(bottom: 20),
-      child: Text(
-        text,
-        style:
-            TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: color),
+      child: InkWell(
+        onTap: () {
+          onTap?.call();
+        },
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: color),
+        ),
       ),
     );
   }
@@ -119,12 +128,16 @@ class TextFieldBox extends StatelessWidget {
     this.controller,
     this.errorText,
     this.onChanged,
+    this.suffixIcon,
+    this.obscureText = false,
   });
   String hintText = "";
   Border? boxBoder;
   TextEditingController? controller;
   String? errorText;
   Function? onChanged;
+  Widget? suffixIcon;
+  bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +151,8 @@ class TextFieldBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
-        onChanged:(value) {
+        obscureText: obscureText,
+        onChanged: (value) {
           onChanged?.call(value);
         },
         controller: controller,
@@ -151,6 +165,7 @@ class TextFieldBox extends StatelessWidget {
           errorText: errorText,
           errorStyle: const TextStyle(fontSize: 16),
           border: InputBorder.none,
+          suffixIcon: suffixIcon,
         ),
       ),
     );

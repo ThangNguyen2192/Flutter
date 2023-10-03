@@ -207,3 +207,32 @@ Center(
 //--- Mở bàn phím lên là object tự đẩy lên trên
 Padding(
                   padding: MediaQuery.of(context).viewInsets,//--
+
+
+  // child: Image.network(
+              //   'https://inkythuatso1.com/uploads/images/2022/03/hinh-anh-avatar-dep-cho-con-gai-dai-dien-30-14-15-58.jpg',
+              //   frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+              //     return const Text('abcd');
+              //   },
+              //   errorBuilder: (BuildContext context, Object exception,
+              //       StackTrace? stackTrace) {
+              //     return const Text('Your error widget...');
+              //   },
+              // ),
+              //     child: FadeInImage(
+              //       fadeInDuration: Duration(milliseconds: 1),
+
+              //   width: 200,
+              //   height: 200,
+              //   image: const NetworkImage(
+              //       "https://inkythuatso.com/uploads/images/2022/03/hinh-anh-avatar-dep-cho-con-gai-dai-dien-30-14-15-58.jpg"),
+              //   placeholder: const AssetImage("assets/images/1.png"),
+              //   imageErrorBuilder: (context, error, stackTrace) {
+              //     return Image.asset(
+              //         width: 200,
+              //         height: 200,
+              //         'assets/images/1.png',
+              //         fit: BoxFit.cover);
+              //   },
+              //   fit: BoxFit.fitWidth,
+              // )

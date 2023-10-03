@@ -1,74 +1,46 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const TestScaffold());
+  runApp(const MyApp());
 }
 
-class TestScaffold extends StatelessWidget {
-  const TestScaffold({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return const MaterialApp(
+      home: MyTabBarDemo(),
+    );
+  }
+}
+
+class MyTabBarDemo extends StatelessWidget {
+  const MyTabBarDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2, // Số lượng tab
+      child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.pink,
-          leading: const BackButton(),
-          title: const Text("AppBar1234"),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  print('onAction');
-                },
-                child: const Icon(
-                  Icons.access_alarm,
-                  size: 32,
-                  color: Colors.greenAccent,
-                )
-                // const Text("Action", style: TextStyle(color: Colors.black)))
-                )
-          ],
-        ),
-        body: Center(
-          child: Container(
-            width: 1000,
-            height: 1000,
-            color: Colors.teal,
-            child: Center(
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.red),
-                child: const Center(
-                  child: Text(
-                    'Inside Container shape circle',
-                    textDirection: TextDirection.ltr,
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
+          title: const Text('TabBar Demo'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.home)),
+              Tab(icon: Icon(Icons.settings)),
+            ],
           ),
-          // child: Image(
-          //   image: NetworkImage(
-          //       'https://haycafe.vn/wp-content/uploads/2023/01/Hinh-anh-thien-nhien-dep-nhat.jpeg'),
-          //   height: 300,
-          // ),
-          // child: Icon(
-          //   Icons.accessibility_new_sharp,
-          //   color: Colors.pink,
-          //   size: 80,
-          // ),
-          // child: Text(
-          //   "body",
-          //   style: TextStyle(fontSize: 40, color: Colors.blue),
-          // ),
+        ),
+        body: const TabBarView(
+          children: [
+            Center(
+              child: Text('Tab 1 Content'),
+            ),
+            Center(
+              child: Text('Tab 2 Content'),
+            ),
+          ],
         ),
       ),
     );

@@ -1,22 +1,26 @@
 import 'dart:math';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Practise/login/child.dart';
+import 'package:flutter_application_1/Practise/login_Messenger/child.dart';
+import 'package:flutter_application_1/Practise/login_Messenger/mainApp.dart';
+import 'package:flutter_application_1/Practise/login_Messenger/messagePage.dart';
 
 void main() {
-  runApp(const SigninPage());
+  runApp(const LoginPage());
 }
 
-class SigninPage extends StatefulWidget {
-  const SigninPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SigninPage> createState() => _SigninPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SigninPageState extends State<SigninPage> {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   String? _errorEmail;
+  String? _errorPass;
   bool checkEmail() {
     String email = emailController.text;
     String? error;
@@ -38,12 +42,36 @@ class _SigninPageState extends State<SigninPage> {
     setState(() {
       _errorEmail = error;
     });
-    return false;
+    return error == null;
+  }
+
+  void onPressedSignIn() {
+    if (checkEmail()) {
+      if (emailController.text.toLowerCase() != "abc@gmail.com") {
+        setState(() {
+          _errorEmail = "Email chưa được đăng ký";
+        });
+        return;
+      }
+      if (passController.text != "123") {
+        setState(() {
+          _errorPass = "Mật khẩu không đúng";
+        });
+        return;
+      }
+      setState(() {
+        _errorEmail = null;
+        _errorPass = null;
+      });
+      LoadData();
+
+      Navigator.of(context).pushNamed("/messagePage");
+    }
   }
 
   void onChangedEmail(String email) {
     //print(email);
-    // String email = emailController.text;
+    String email = emailController.text;
     String? error = _errorEmail;
     if (_errorEmail != null) {
       if (email.isEmpty) {
@@ -51,10 +79,10 @@ class _SigninPageState extends State<SigninPage> {
       } else {
         List<String> s = email.split("@");
         if (s.length < 2 || s.contains("")) {
-          print("a");
+          // print("a");
           return;
         } else {
-          print("b");
+          // print("b");
           s = s[s.length - 1].split('.');
           if (s.length < 2 || s.contains("")) {
             return;
@@ -71,6 +99,7 @@ class _SigninPageState extends State<SigninPage> {
     }
   }
 
+  bool _emialObscureText = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -136,15 +165,32 @@ class _SigninPageState extends State<SigninPage> {
                   ),
                   TextFieldBox(
                     controller: passController,
+                    errorText: _errorPass,
                     hintText: "Password",
+                    obscureText: _emialObscureText,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          _emialObscureText = !_emialObscureText;
+                        });
+                      },
+                      child: const Icon(
+                        Icons.visibility,
+                      ),
+                    ),
                   ),
                   TextBox(
                     text: "Forgot for password?",
                     alignment: Alignment.centerRight,
+                    onTap: () {
+                      // print('a');
+                      emailController.text = 'abc@gmail.com';
+                      passController.text = '123';
+                    },
                   ),
                   ButtonBox(
                     text: "Sign in",
-                    onPressed: checkEmail,
+                    onPressed: onPressedSignIn,
                   ),
                   TextBox(
                     text: "Create new account",
@@ -180,6 +226,7 @@ class _SigninPageState extends State<SigninPage> {
           ),
         ]),
       ),
+      routes: routes,
     );
   }
 }
