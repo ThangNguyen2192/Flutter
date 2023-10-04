@@ -5,9 +5,9 @@ import 'package:login_messenger/child.dart';
 import 'package:login_messenger/main.dart';
 import 'package:login_messenger/messagePage.dart';
 
-void main() {
-  runApp(const LoginPage());
-}
+// void main() {
+//   runApp(const LoginPage());
+// }
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

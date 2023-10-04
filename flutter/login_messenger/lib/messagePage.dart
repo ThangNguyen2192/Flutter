@@ -5,11 +5,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-void main() {
-  LoadData();
-  // print(messages.length);
-  runApp(const MyApp());
-}
+// void main() {
+//   LoadData();
+//   // print(messages.length);
+//   runApp(const MyApp());
+// }
 
 List<Friend> friends = [];
 List<Friend> friendsOnline = [];
