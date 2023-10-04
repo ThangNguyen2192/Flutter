@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 // void main() {
-//   LoadData();
+//   loadData();
 //   // print(messages.length);
 //   runApp(const MyApp());
 // }
@@ -14,7 +14,7 @@ import 'package:flutter/services.dart' show rootBundle;
 List<Friend> friends = [];
 List<Friend> friendsOnline = [];
 List<Message> messages = [];
-LoadData() {
+loadData() {
   if (friends.isNotEmpty) {
     return;
   }

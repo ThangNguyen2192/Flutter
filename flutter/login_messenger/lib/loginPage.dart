@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorEmail = null;
         _errorPass = null;
       });
-      LoadData();
+      loadData();
       Navigator.of(context).pushNamed("/messagePage");
     }
   }
