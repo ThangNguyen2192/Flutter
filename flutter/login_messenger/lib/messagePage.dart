@@ -1,7 +1,9 @@
+import 'dart:collection';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
   LoadData();
@@ -12,11 +14,10 @@ void main() {
 List<Friend> friends = [];
 List<Friend> friendsOnline = [];
 List<Message> messages = [];
-void LoadData() {
+LoadData() {
   if (friends.isNotEmpty) {
     return;
   }
-  //print("v0");
   friends = [
     Friend(name: "friend 1", id: "1", pathImage: "assets/images/1.png"),
     Friend(name: "friend 2", id: "2", pathImage: "assets/images/2.png"),
@@ -29,21 +30,26 @@ void LoadData() {
     Friend(name: "friend 9", id: "9", pathImage: "assets/images/9.png"),
     Friend(name: "friend 10", id: "10", pathImage: "assets/images/10.png"),
     Friend(name: "friend 11", id: "11", pathImage: "assets/images/11.png"),
+    Friend(name: "No name", id: "12"),
   ];
+
   friendsOnline = [...friends];
 
   messages = [
-    Message(content: "Anh ơ đâu", friend: friends[0]),
-    Message(content: "bye", friend: friends[1]),
-    Message(content: "hi", friend: friends[2]),
-    Message(content: "hello", friend: friends[3]),
     Message(content: "Anh đi chơi không", friend: friends[4]),
     Message(content: "Đi ăn đi anh", friend: friends[5]),
     Message(content: "Xem phim không anh", friend: friends[6]),
     Message(content: "Cho em làm quen nhé", friend: friends[7]),
+    Message(content: "Anh ơ đâu", friend: friends[0]),
+    Message(content: "abc", friend: friends[11]),
+    Message(content: "bye", friend: friends[1]),
+    Message(content: "hi", friend: friends[2]),
+    Message(content: "hello", friend: friends[3]),
+
     Message(content: "a", friend: friends[8]),
     Message(content: "b", friend: friends[9]),
     Message(content: "c", friend: friends[10]),
+
     // Message(content: "c", ),
   ];
   // print('v');
@@ -107,8 +113,7 @@ class _MessagePageState extends State<MessagePage> {
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.all(10),
-                          child: ListViewMessage(
-                              messages: messages, friends: friends),
+                          child: ListViewMessage(messages: messages),
                         ),
                       ),
                     ],
@@ -155,7 +160,6 @@ class _MessagePageState extends State<MessagePage> {
         floatingActionButton: FloatingActionButton(
           // backgroundColor: Colors.amber,
           onPressed: () {
-            // print('v');
             setState(() {
               if (friendsOnline.isNotEmpty) {
                 friendsOnline.remove(friendsOnline[0]);
@@ -175,10 +179,8 @@ class _MessagePageState extends State<MessagePage> {
 }
 
 class ListViewMessage extends StatelessWidget {
-  const ListViewMessage(
-      {super.key, required this.messages, required this.friends});
+  const ListViewMessage({super.key, required this.messages});
   final List<Message> messages;
-  final List<Friend> friends;
 
   @override
   Widget build(BuildContext context) {
@@ -198,15 +200,11 @@ class ListViewMessage extends StatelessWidget {
                   //color: Colors.pink,
                   shape: BoxShape.circle,
                 ),
-
-                child: ClipOval(
-                    child: Image(
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                          messages[index].friend.pathImage,
-                        ))),
+                child: Avatar(
+                  friend: messages[index].friend,
+                  width: 70,
+                  height: 70,
+                ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -246,11 +244,7 @@ class ListViewFriend extends StatelessWidget {
                 shape: BoxShape.circle,
                 // color: Colors.amber,
                 border: Border.all(color: Colors.black)),
-            child: ClipOval(
-              child: Image(
-                  fit: BoxFit.cover,
-                  image: AssetImage(friends[index].pathImage)),
-            ),
+            child: Avatar(friend: friends[index]),
           );
         },
         separatorBuilder: (_, index) {
@@ -262,11 +256,67 @@ class ListViewFriend extends StatelessWidget {
   }
 }
 
+Future<bool> checkAssetExists(String assetName) async {
+  try {
+    await rootBundle.load(assetName);
+    return true; // Asset exists
+  } catch (error) {
+    return false; // Asset doesn't exist
+  }
+}
+
+class Avatar extends StatelessWidget {
+  Avatar({super.key, required this.friend, this.width, this.height});
+  Friend friend;
+  double? width;
+  double? height;
+
+  // final List<Friend> friends;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: checkAssetExists(friend.pathImage),
+      builder: (context, snapshot) {
+        Center center = Center(
+          child: Text(
+            friend.name.substring(0, 1).toUpperCase(),
+            style: const TextStyle(fontSize: 20),
+          ),
+        );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          //return const Text("1");
+        } else if (snapshot.hasError) {
+          //return const Text('Error');
+        } else {
+          final assetExists = snapshot.data ?? false;
+          if (assetExists) {
+            return ClipOval(
+              child: Image(
+                width: width,
+                height: height,
+                fit: BoxFit.cover,
+                image: AssetImage(friend.pathImage),
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Text("abcd"),
+                  );
+                },
+              ),
+            );
+          }
+        }
+        return center;
+      },
+    );
+  }
+}
+
 class Friend {
   final String name;
   final String id;
   final String pathImage;
-  Friend({required this.name, required this.id, required this.pathImage});
+  Friend({required this.name, required this.id, this.pathImage = ""});
 }
 
 class Message {
