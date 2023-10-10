@@ -7,7 +7,6 @@ void main(List<String> args) {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
           title: const Text("Chess"),
         ),
         body: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           color: Colors.blue,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
               int hang = ((index + 1) / 8).ceil();
 
               //kiểm tra trường hợp hàng lẻ, index lẻ thì là Trắng
-              //kiẻm tra hàng trắng, index trắng thì là Trắng
+              //kiẻm tra hàng chẵn, index chẵn thì là Trắng
               if ((hang % 2 != 0 && index % 2 != 0) ||
                   (hang % 2 == 0 && index % 2 == 0)) {
                 color = Colors.white;
