@@ -1,83 +1,71 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+
+    // Lắng nghe sự kiện khi người dùng chuyển tab
+    _tabController.animation?.addListener(() {
+      if (_tabController.indexIsChanging) {
+        // Sự kiện khi người dùng chuyển tab
+        print('Tab changed to index ${_tabController.index}');
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Text('leading'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('TabBar Scroll Event Example'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          Center(child: Text('Tab 1')),
+          Center(child: Text('Tab 2')),
+          Center(child: Text('Tab 3')),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.blue,
-        // onPressed: _incrementCounter,
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (BuildContext context) {
-              print(context);
-              return Container(
-                height: 200,
-                color: Colors.white,
-              );
-            },
-          );
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: TabBar(
+        controller: _tabController,
+        tabs: const [
+          Tab(text: 'Tab 1'),
+          Tab(text: 'Tab 2'),
+          Tab(text: 'Tab 3'),
+        ],
+      ),
     );
   }
 }

@@ -104,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white, // Đặt màu nền thành màu trắng
       ),

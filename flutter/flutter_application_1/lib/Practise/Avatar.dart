@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
               isUpload: true,
             ),
             Avatar(
+              //isUpload: true,
               name: "Thang",
               avatarUrl:
                   "https://demoda.vn/wp-content/uploads/2022/08/hinh-anh-avatar-nu-de-thuong.jpg",
@@ -84,9 +85,10 @@ class Avatar extends StatelessWidget {
                         alignment: Alignment.center,
                         width: 150,
                         height: 150,
-                        child: const Text(
-                          "T",
-                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        child: Text(
+                          name.substring(0, 1).toUpperCase(),
+                          style: const TextStyle(
+                              fontSize: 30, color: Colors.white),
                         ));
                   },
                 ),

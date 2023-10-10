@@ -67,36 +67,8 @@ class MessagePage extends StatefulWidget {
   State<MessagePage> createState() => _MessagePageState();
 }
 
-class _MessagePageState extends State<MessagePage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  int _tabindex = 0; // Biến để theo dõi tab hiện tại
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
-
-    // Thêm lắng nghe sự kiện chuyển tab
-    _tabController.addListener(_handleTabChange);
-  }
-
-  // Xử lý sự kiện chuyển tab
-  void _handleTabChange() {
-    setState(() {
-      _tabindex = _tabController.index;
-      print(_tabindex);
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.removeListener(_handleTabChange);
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  //int _tabindex = 0;
+class _MessagePageState extends State<MessagePage> {
+  int _tabindex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +83,6 @@ class _MessagePageState extends State<MessagePage>
           children: [
             Expanded(
               child: TabBarView(
-                controller: _tabController,
                 children: [
                   // Nội dung cho Tab 1
                   Column(
@@ -149,12 +120,11 @@ class _MessagePageState extends State<MessagePage>
               ),
             ),
             TabBar(
-              controller: _tabController,
               onTap: (value) {
-                // // print("v");
-                // setState(() {
-                //   _tabindex = value;
-                // });
+                // print("v");
+                setState(() {
+                  _tabindex = value;
+                });
               },
               // indicator: BoxDecoration(),
               // indicatorColor: Colors.pink,
@@ -291,6 +261,7 @@ class ListViewFriend extends StatelessWidget {
         itemCount: friends.length);
   }
 }
+
 
 class Friend {
   final String name;
