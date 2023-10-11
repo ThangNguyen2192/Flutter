@@ -411,8 +411,8 @@ class Action extends StatelessWidget {
       height: 44,
       child: Image.asset(
         pathImage,
-        width: 24,
-        height: 24,
+        // width: 24,
+        // height: 24,
       ),
     );
   }
