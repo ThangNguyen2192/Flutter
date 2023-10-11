@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 import 'main.dart';
@@ -127,8 +128,9 @@ class _RecommendedWorkshops extends State<RecommendedWorkshops> {
                               builder: (BuildContext context, Widget? child) {
                                 return SliverGrid.builder(
                                   gridDelegate:
-                                       SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: (responsiveUiConfig.screenWidth ~/ 180),
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:
+                                        (responsiveUiConfig.screenWidth ~/ 180),
                                     mainAxisExtent: 307,
                                     // mainAxisSpacing: 1,
                                     // crossAxisSpacing: 30,
@@ -180,12 +182,42 @@ class ItemRecommendedWorkshop extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                "assets/images/5.png",
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              Stack(alignment: Alignment.topRight, children: [
+                Image.asset(
+                  "assets/images/5.png",
+                  height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(top: 10, right: 10),
+                  //padding: const EdgeInsets.all(10),
+                  width: 48,
+                  height: 24,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40),
+                      color: const Color(0xFFFFFFFF)),
+                  // child: const Icon(
+                  //   Icons.star_rounded,
+                  //   size: 12,
+                  // ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(
+                        "assets/images/star.png",
+                        width: 12,
+                        height: 12,
+                      ),
+                      const Text(
+                        "4.9",
+                        style: TextStyle(fontSize: 12, color: Colors.black),
+                      )
+                    ],
+                  ),
+                ),
+              ]),
               const Text(
                 "Miss Zachary Will",
                 // textAlign: TextAlign.left,
