@@ -54,7 +54,7 @@ class _TopServicesState extends State<TopServices> {
       // });
       await Future.delayed(const Duration(seconds: 2));
       //setState(() {
-      listItemTopService.addAll(List.generate(10, (index) {
+      listItemTopService.addAll(List.generate(5, (index) {
         if (index % 3 == 0) {
           return const ItemTopService(pathImage: "assets/images/service3.png");
         }
@@ -155,12 +155,14 @@ class _TopServicesState extends State<TopServices> {
                                     if (index < itemTopServices.value.length) {
                                       return itemTopServices.value[index];
                                     } else if (_isLoading.value) {
-                                      return const CircularProgressIndicator();
+                                      return Container(
+                                        alignment: Alignment.topCenter,
+                                        child:
+                                            const CircularProgressIndicator(),
+                                      );
                                     }
                                     return null;
-                                    //}
                                   },
-                                  //itemCount: 60,
                                 );
                               },
                             )

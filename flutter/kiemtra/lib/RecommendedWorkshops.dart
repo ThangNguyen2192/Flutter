@@ -146,11 +146,14 @@ class _RecommendedWorkshops extends State<RecommendedWorkshops> {
                                       return itemRecommendedWorkshops
                                           .value[index];
                                     } else if (_isLoading.value) {
-                                      return const CircularProgressIndicator();
+                                      return Container(
+                                        alignment: Alignment.topCenter,
+                                        child:
+                                            const CircularProgressIndicator(),
+                                      );
                                     }
                                     return null;
                                   },
-                                  //itemCount: 60,
                                 );
                               },
                             )
