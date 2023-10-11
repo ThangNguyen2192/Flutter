@@ -93,7 +93,10 @@ class _RecommendedWorkshops extends State<RecommendedWorkshops> {
                   color: Colors.white,
                   child: const Text(
                     "View All",
-                    style: TextStyle(fontSize: 14, color: Color(0xFF154883)),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF154883),
+                        decoration: TextDecoration.underline),
                   ),
                 )
               ],
