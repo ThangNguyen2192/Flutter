@@ -31,7 +31,7 @@ class _Page1 extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Image.asset("assets/images/moon_cake.png"),
+            Image.asset("assets/images/1.png"),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushNamed("/page2");
@@ -67,3 +67,13 @@ class _Page2 extends StatelessWidget {
     );
   }
 }
+
+
+  // Navigator.of(context).push(
+  //             MaterialPageRoute<void>(
+  //               builder: (BuildContext context) => const _Page2(),
+  //               settings: const RouteSettings(
+  //                 arguments: "Argument"
+  //               )
+  //             ),
+  //           );
