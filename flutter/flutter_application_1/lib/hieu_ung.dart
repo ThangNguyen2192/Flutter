@@ -496,7 +496,7 @@ class LogoFadeState extends State<LogoFade> {
           const Text("AnimatedOpacity"),
           AnimatedOpacity(
             opacity: opacityLevel,
-            duration: const Duration(seconds: 1),
+            duration: const Duration(seconds: 3),
             child: const FlutterLogo(),
           ),
           ElevatedButton(

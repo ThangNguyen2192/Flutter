@@ -51,7 +51,7 @@ class CustomSliverStickyHeaderBuilder extends StatefulWidget {
 class _CustomSliverStickyHeaderBuilderState
     extends State<CustomSliverStickyHeaderBuilder> {
   int _childCount = 20;
-  Icon icon = const Icon(Icons.arrow_upward);
+  Icon icon = const Icon(Icons.remove_circle_outline);
   @override
   Widget build(BuildContext context) {
     return SliverStickyHeader.builder(
@@ -73,10 +73,10 @@ class _CustomSliverStickyHeaderBuilderState
                     setState(() {
                       if (_childCount == 20) {
                         _childCount = 0;
-                        icon = const Icon(Icons.arrow_downward);
+                        icon = const Icon(Icons.add_box);
                       } else {
                         _childCount = 20;
-                        icon = const Icon(Icons.arrow_upward);
+                        icon = const Icon(Icons.remove_circle_outline);
                       }
                     });
                   },
@@ -115,7 +115,7 @@ class CustomSliverStickyHeader extends StatefulWidget {
 
 class _CustomSliverStickyHeaderState extends State<CustomSliverStickyHeader> {
   int _childCount = 20;
-  Icon icon = const Icon(Icons.arrow_upward);
+  Icon icon = const Icon(Icons.remove_circle_outline);
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +132,10 @@ class _CustomSliverStickyHeaderState extends State<CustomSliverStickyHeader> {
                   setState(() {
                     if (_childCount == 20) {
                       _childCount = 0;
-                      icon = const Icon(Icons.arrow_downward);
+                      icon = const Icon(Icons.add_box);
                     } else {
                       _childCount = 20;
-                      icon = const Icon(Icons.arrow_upward);
+                      icon = const Icon(Icons.remove_circle_outline);
                     }
                   });
                 },
