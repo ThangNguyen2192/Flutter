@@ -250,7 +250,7 @@ class _HomeTabBarViewState extends State<HomeTabBarView> {
       
       //-- Gọi hàm để gán lại _opacityLevel trong recommendedworkshops
       if (renderBox.localToGlobal(Offset.zero).dy <
-          renderBox.size.height - 200) {
+          renderBox.size.height - 100) {
         recommenProvider.updateOpacityLevel();
       }
      
