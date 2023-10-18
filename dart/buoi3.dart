@@ -1,5 +1,4 @@
 void main(List<String> arguments) {
-  print('abc');
   functionTest(() => test('function call function'));
 
   var ret = functionTestCallBack(parseStringFromInt);
@@ -11,24 +10,24 @@ void main(List<String> arguments) {
       functionTestCallBack1(test, (intstr) => parseStringFromInt('fdfdfdfd'));
   print(ret3);
 
-  functionWithOptionalParam();
-  functionWithOptionalParam(b: 'bien b', a: 'bien a');
+  // functionWithOptionalParam();
+  // functionWithOptionalParam(b: 'bien b', a: 'bien a');
 
-  functionPositionalParam('a', 5);
-  List<DayOfWeeks> dayOfWeeks = DayOfWeeks.values;
-  for (var element in dayOfWeeks) {
-    print('day is: ${element.getName()}');
-  }
+  // functionPositionalParam('a', 5);
+  // List<DayOfWeeks> dayOfWeeks = DayOfWeeks.values;
+  // for (var element in dayOfWeeks) {
+  //   print('day is: ${element.getName()}');
+  // }
 
-  for (var e in dayOfWeeks) {
-    print('day is: ${e.getName()}');
-  }
+  // for (var e in dayOfWeeks) {
+  //   print('day is: ${e.getName()}');
+  // }
 
-  String? snull;
-  snull = 'abc';
-  List<String> list1 = snull.split('') ?? [];
+  // String? snull;
+  // snull = 'abc';
+  // List<String> list1 = snull.split('') ?? [];
 
-  List<String> list2 = snull.split('');
+  // List<String> list2 = snull.split('');
 }
 
 void test(String test) {

@@ -64,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
         _errorPass = null;
       });
       loadData();
+
       Navigator.of(context).pushNamed("/messagePage");
     }
   }
@@ -102,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.white,
         scaffoldBackgroundColor: Colors.white, // Đặt màu nền thành màu trắng

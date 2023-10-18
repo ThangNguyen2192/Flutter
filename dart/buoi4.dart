@@ -8,6 +8,7 @@ void main(List<String> arguments) {
   int a1 = a ~/ 2;
   print(a1);
   print(a % 3);
+  
   bool b = true;
   print('ket qua la: ${b ? 'b==true' : 'b==false'}');
   print('kq la: ${b == true ? 'true' : 'false'}');
