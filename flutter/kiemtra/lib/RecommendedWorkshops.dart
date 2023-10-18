@@ -1,7 +1,31 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'package:provider/provider.dart';
 
 import 'main.dart';
+
+
+//--Tạo ra RecommenProvider để cập nhật đưọc lại giá trị của recommendedworkshops.dart
+class RecommenProvider with ChangeNotifier {
+//  bool myVariable_Other = false;
+  GlobalKey recommendKey = GlobalKey();//--Gán key phục vụ xử lý để biết được khi cuộn đến phần recommendedworkshops
+  Color color = Colors.yellow;
+double _opacityLevel = 0;//--Độ mờ khi khởi tạo là 0, khi cuộn đến thì chuyển về 1
+  void updateOpacityLevel() {
+    // Thực hiện logic cập nhật biến ở đây.
+    // myVariable_Other = gt; // Ví dụ: thay đổi giá trị biến
+    // if (color == Colors.yellow) {
+    //   color = Colors.blue;
+    // }
+    if (_opacityLevel < 1) {
+      _opacityLevel = 1;
+    }
+    notifyListeners(); // Thông báo cho các người tiêu dùng về thay đổi.
+  }
+
+  
+}
 
 class RecommendedWorkshops extends StatefulWidget {
   const RecommendedWorkshops({super.key});
@@ -17,7 +41,8 @@ List<ItemRecommendedWorkshop> listItemRecommendedWorkshop = [
   const ItemRecommendedWorkshop(),
 ];
 
-class _RecommendedWorkshops extends State<RecommendedWorkshops> {
+class _RecommendedWorkshops extends State<RecommendedWorkshops>
+    with WidgetsBindingObserver {
   ValueNotifier<List<ItemRecommendedWorkshop>> itemRecommendedWorkshops =
       ValueNotifier<List<ItemRecommendedWorkshop>>(listItemRecommendedWorkshop);
 
@@ -62,11 +87,21 @@ class _RecommendedWorkshops extends State<RecommendedWorkshops> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+   
+  }
+
+  @override
   Widget build(BuildContext context) {
+   final recommenProvider = Provider.of<RecommenProvider>(context);
+
     return SliverToBoxAdapter(
       child: Container(
+        key: recommenProvider.recommendKey,
         height: 691,
-        // color: Colors.red,
+        //  color: recommenProvider.color,
         padding: const EdgeInsets.only(top: 40, right: 16),
         //padding: const EdgeInsets.only(top: 24, right: 0),
         child: Column(
@@ -180,84 +215,92 @@ class ItemRecommendedWorkshop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(10),
-        // height: 307,
-        // color: Colors.pink,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(alignment: Alignment.topRight, children: [
-                Image.asset(
-                  "assets/images/5.png",
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(top: 10, right: 10),
-                  //padding: const EdgeInsets.all(10),
-                  width: 48,
-                  height: 24,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: const Color(0xFFFFFFFF)),
-                  // child: const Icon(
-                  //   Icons.star_rounded,
-                  //   size: 12,
-                  // ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        "assets/images/star.png",
-                        width: 12,
-                        height: 12,
-                      ),
-                      const Text(
-                        "4.9",
-                        style: TextStyle(fontSize: 12, color: Colors.black),
-                      )
-                    ],
+   final recommenProvider = Provider.of<RecommenProvider>(context);
+    // final myStateOther = Provider.of<MyProvider>(context);
+    return AnimatedOpacity(
+      opacity: recommenProvider._opacityLevel,
+      curve: Curves.easeInOutSine,
+      duration: const Duration(seconds: 4),
+      child: Container(
+        //  key: recommenProvider.containerkey,
+          padding: const EdgeInsets.all(10),
+          // height: 307,
+          // color: Colors.pink,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(alignment: Alignment.topRight, children: [
+                  Image.asset(
+                    "assets/images/5.png",
+                    height: 180,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                ),
-              ]),
-              const Text(
-                "Miss Zachary Will",
-                // textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              const Text(
-                "Beautician",
-                style: TextStyle(fontSize: 12, color: Color(0xFF827BEB)),
-              ),
-              const Text(
-                "Occaecati aut nam beatae quo non deserunt consequatur.",
-                style: TextStyle(fontSize: 12),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 24, top: 6, right: 24, bottom: 6),
-                // width: 132,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFF827BEB),
-                ),
-                // color: const Color(0xFF827BEB),
-                child: const Center(
-                  child: Text(
-                    "Book Workshop",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(top: 10, right: 10),
+                    //padding: const EdgeInsets.all(10),
+                    width: 48,
+                    height: 24,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: const Color(0xFFFFFFFF)),
+                    // child: const Icon(
+                    //   Icons.star_rounded,
+                    //   size: 12,
+                    // ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          "assets/images/star.png",
+                          width: 12,
+                          height: 12,
+                        ),
+                        const Text(
+                          "4.9",
+                          style: TextStyle(fontSize: 12, color: Colors.black),
+                        )
+                      ],
                     ),
                   ),
+                ]),
+                const Text(
+                  "Miss Zachary Will",
+                  // textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
-              )
-            ]));
+                const Text(
+                  "Beautician",
+                  style: TextStyle(fontSize: 12, color: Color(0xFF827BEB)),
+                ),
+                const Text(
+                  "Occaecati aut nam beatae quo non deserunt consequatur.",
+                  style: TextStyle(fontSize: 12),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      left: 24, top: 6, right: 24, bottom: 6),
+                  // width: 132,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xFF827BEB),
+                  ),
+                  // color: const Color(0xFF827BEB),
+                  child: const Center(
+                    child: Text(
+                      "Book Workshop",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
+              ])),
+    );
   }
 }

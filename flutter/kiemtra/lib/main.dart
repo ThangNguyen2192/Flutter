@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
-import 'RecommendedWorkshops.dart';
-import 'Responsive.dart';
-import 'TopServices.dart';
+import 'recommendedworkshops.dart';
+import 'responsive.dart';
+import 'topservices.dart';
+// ignore: unused_import
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      // ChangeNotifierProvider(create: (context) => MyState()),
+      ChangeNotifierProvider(create: (context) => RecommenProvider()),
+    ],
+    child: const MyApp(),
+  ));
 }
+
+//final myStateOther;
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -26,6 +36,7 @@ ResponsiveUiConfig responsiveUiConfig = ResponsiveUiConfig();
 
 class _MyAppState extends State<MyApp> {
   bool isDarkTheme = false; // Ban đầu sử dụng theme sáng
+
   void toggleTheme() {
     setState(() {
       isDarkTheme = !isDarkTheme; // Đảo ngược theme
@@ -76,7 +87,12 @@ class _MyAppState extends State<MyApp> {
                       isDarkTheme ? Icons.light_mode : Icons.dark_mode,
                       color: Colors.black,
                     ),
-                    onPressed: toggleTheme,
+                    onPressed: () {
+                      toggleTheme;
+                      //print(0);
+                      // checkSliverVisibility(myState.updateSliverVisibility);
+                      //print(2);
+                    },
                   ),
                 ),
               ],
@@ -112,6 +128,7 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
     // Thêm lắng nghe sự kiện chuyển tab
     _tabController.addListener(_handleTabChange);
   }
+
 
   // Xử lý sự kiện chuyển tab
   void _handleTabChange() {
@@ -188,18 +205,68 @@ class _BodyState extends State<Body> with SingleTickerProviderStateMixin {
   }
 }
 
-class HomeTabBarView extends StatelessWidget {
+class HomeTabBarView extends StatefulWidget {
   const HomeTabBarView({
     super.key,
   });
 
   @override
+  State<HomeTabBarView> createState() => _HomeTabBarViewState();
+}
+
+class _HomeTabBarViewState extends State<HomeTabBarView> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_updateSliverPosition);
+  }
+
+  @override
+  void dispose() {
+     _scrollController.removeListener(_updateSliverPosition);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  //--Hàm theo dõi xem đang cuộn tới widget nào
+  void _updateSliverPosition() {
+    final recommenProvider =
+        Provider.of<RecommenProvider>(context, listen: false);
+
+    if (recommenProvider.recommendKey.currentContext != null) {
+      RenderBox renderBox = recommenProvider.recommendKey.currentContext!
+          .findRenderObject() as RenderBox;
+      // Offset position = renderBox.localToGlobal(Offset.zero);
+      // setState(() {
+      //   sliverPosition = position;
+      // });
+      // if (_scrollController.position.viewportDimension >
+      //     (renderBox.size.height*0 / 2 +
+      //         renderBox.localToGlobal(Offset.zero).dy)) {
+      // print(renderBox.size.height);
+      // print(renderBox.localToGlobal(Offset.zero).dy);
+      
+      //-- Gọi hàm để gán lại _opacityLevel trong recommendedworkshops
+      if (renderBox.localToGlobal(Offset.zero).dy <
+          renderBox.size.height - 200) {
+        recommenProvider.updateOpacityLevel();
+      }
+     
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //context=context;
     return CustomScrollView(
+      controller: _scrollController,
       slivers: [
         Search(),
         const TodaysDeal(),
         const TopServices(),
+        // const Text("afdsf"),
         const RecommendedWorkshops(),
       ],
     );
@@ -347,48 +414,7 @@ class Search extends StatelessWidget {
               ),
             )
           ],
-        )
-        // title: SizedBox(
-        //   height: 45,
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(16),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Expanded(
-        //           child: Container(
-        //             // width: 295.w,
-        //             //  padding: const EdgeInsets.only(right: 50),
-        //             margin: const EdgeInsets.only(right: 20),
-        //             decoration: BoxDecoration(
-        //                 borderRadius: BorderRadius.circular(14),
-        //                 border: Border.all(
-        //                     width: 1,
-        //                     color: const Color.fromRGBO(178, 186, 205, 1))),
-        //             child: TextField(
-        //               decoration: InputDecoration(
-        //                   hintText: "Search here",
-        //                   border: InputBorder.none,
-        //                   prefixIcon: InkWell(
-        //                       onTap: () {}, child: const Icon(Icons.search))),
-        //             ),
-        //           ),
-        //         ),
-        //         Container(
-        //           width: 51,
-        //           decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(14),
-        //               border: Border.all(
-        //                   width: 1, color: const Color(0xFFB2BACD))),
-        //           child: Image.asset(
-        //             "assets/images/sort.png",
-        //           ),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        );
+        ));
   }
 }
 
