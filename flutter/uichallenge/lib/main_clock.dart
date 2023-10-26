@@ -60,6 +60,12 @@ class ShapePainter extends CustomPainter {
   DateTime dateTime = DateTime.now();
   @override
   void paint(Canvas canvas, Size size) {
+    double dx = size.width / 2;
+    double dy = size.height / 2;
+    double doDaiKimGio = 80;
+    double doDaiKimPhut = 100;
+    double doDaiKimGiay = 120;
+
     //--Vẽ nền trong đồng hồ và vòng tròn bo bên ngoài
     void veNen() {
       final Path path = Path();
@@ -76,14 +82,14 @@ class ShapePainter extends CustomPainter {
           ;
       //--Vẽ nền trong
       path.addOval(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
+        center: Offset(dx, dy),
         radius: 150,
       ));
       canvas.drawPath(path, paintBackground);
 
       //--vẽ vòng tròn to
       path.addOval(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
+        center: Offset(dx, dy),
         radius: 150,
       ));
       canvas.drawPath(path, paintCircle);
@@ -100,12 +106,13 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 16
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
-      path.moveTo(size.width / 2, size.height / 2);
+      path.moveTo(dx, dy);
       path.lineTo(
-          size.width / 2 +
-              80 * sin(dateTime.hour * 30 + 30 * dateTime.minute / 60),
-          size.height / 2 -
-              80 * cos(dateTime.hour * 30 + 30 * dateTime.minute / 60));
+          dx +
+              doDaiKimGio * sin(dateTime.hour * 30 + 30 * dateTime.minute / 60),
+          dy -
+              doDaiKimGio *
+                  cos(dateTime.hour * 30 + 30 * dateTime.minute / 60));
       canvas.drawPath(path, paint);
     }
 
@@ -120,9 +127,9 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 12
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
-      path.moveTo(size.width / 2, size.height / 2);
-      path.lineTo(size.width / 2 + 100 * sin(dateTime.minute * 6),
-          size.height / 2 - 100 * cos(dateTime.minute * 6));
+      path.moveTo(dx, dy);
+      path.lineTo(dx + doDaiKimPhut * sin(dateTime.minute * 6),
+          dy - doDaiKimPhut * cos(dateTime.minute * 6));
       canvas.drawPath(path, paint);
     }
 
@@ -137,9 +144,9 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 8
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
-      path.moveTo(size.width / 2, size.height / 2);
-      path.lineTo(size.width / 2 + 120 * sin(dateTime.second * 6),
-          size.height / 2 - 120 * cos(dateTime.second * 6));
+      path.moveTo(dx, dy);
+      path.lineTo(dx + doDaiKimGiay * sin(dateTime.second * 6),
+          dy - doDaiKimGiay * cos(dateTime.second * 6));
       canvas.drawPath(path, paint);
     }
 
@@ -157,7 +164,7 @@ class ShapePainter extends CustomPainter {
           ;
 
       path.addOval(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2),
+        center: Offset(dx, dy),
         radius: 10,
       ));
       canvas.drawPath(path, paint);
@@ -177,10 +184,8 @@ class ShapePainter extends CustomPainter {
         ..strokeCap = StrokeCap.round;
       for (int i = 0; i < 30; i++) {
         double degree = i * 12;
-        path.moveTo(size.width / 2 + 180 * sin(degree),
-            size.height / 2 - 180 * cos(degree));
-        path.lineTo(size.width / 2 + 200 * sin(degree),
-            size.height / 2 - 200 * cos(degree));
+        path.moveTo(dx + 180 * sin(degree), dy - 180 * cos(degree));
+        path.lineTo(dx + 200 * sin(degree), dy - 200 * cos(degree));
         canvas.drawPath(path, paint);
       }
     }
