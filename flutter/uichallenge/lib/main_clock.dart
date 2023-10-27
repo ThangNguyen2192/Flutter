@@ -106,13 +106,14 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 16
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
+      double degree = dateTime.hour * 30 + 30 * dateTime.minute / 60;
       path.moveTo(dx, dy);
       path.lineTo(
           dx +
-              doDaiKimGio * sin(dateTime.hour * 30 + 30 * dateTime.minute / 60),
+              doDaiKimGio * sin(degree),
           dy -
               doDaiKimGio *
-                  cos(dateTime.hour * 30 + 30 * dateTime.minute / 60));
+                  cos(degree));
       canvas.drawPath(path, paint);
     }
 
@@ -127,9 +128,10 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 12
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
+       double degree =dateTime.minute * 6;
       path.moveTo(dx, dy);
-      path.lineTo(dx + doDaiKimPhut * sin(dateTime.minute * 6),
-          dy - doDaiKimPhut * cos(dateTime.minute * 6));
+      path.lineTo(dx + doDaiKimPhut * sin(degree),
+          dy - doDaiKimPhut * cos(degree));
       canvas.drawPath(path, paint);
     }
 
@@ -144,9 +146,10 @@ class ShapePainter extends CustomPainter {
         ..strokeWidth = 8
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
+      double degree =dateTime.second * 6;
       path.moveTo(dx, dy);
-      path.lineTo(dx + doDaiKimGiay * sin(dateTime.second * 6),
-          dy - doDaiKimGiay * cos(dateTime.second * 6));
+      path.lineTo(dx + doDaiKimGiay * sin(degree),
+          dy - doDaiKimGiay * cos(degree));
       canvas.drawPath(path, paint);
     }
 
