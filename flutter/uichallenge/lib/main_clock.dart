@@ -191,6 +191,25 @@ class ShapePainter extends CustomPainter {
     }
 
     veDuongGach();
+
+    //--Vẽ các mốc giờ
+    void veVachGio() {
+      final Path path = Path();
+
+      final Paint paint = Paint()
+        ..color = Colors.white
+        ..strokeWidth = 8
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round;
+      for (int i = 0; i < 12; i++) {
+        double degree = i * 30;
+        path.moveTo(dx + 130 * sin(degree), dy - 130 * cos(degree));
+        path.lineTo(dx + 135 * sin(degree), dy - 135 * cos(degree));
+        canvas.drawPath(path, paint);
+      }
+    }
+
+    veVachGio();
   }
 
   @override
