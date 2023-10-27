@@ -66,115 +66,73 @@ class ShapePainter extends CustomPainter {
     double doDaiKimPhut = 100;
     double doDaiKimGiay = 120;
 
-    //--Vẽ nền trong đồng hồ và vòng tròn bo bên ngoài
-    void veNen() {
+    
+    void veHinhTron(
+        {Color color = Colors.transparent,
+        double strokeWidth = 0,
+        PaintingStyle style = PaintingStyle.stroke,
+        double radius = 0,}) {
       final Path path = Path();
-
-      final Paint paintBackground = Paint()
-        ..color = const Color(0xFF353763)
-        ..style = PaintingStyle.fill;
-
-      final Paint paintCircle = Paint()
-            ..color = Colors.white
-            ..strokeWidth = 20
-            ..style = PaintingStyle.stroke
+      final Paint paint = Paint()
+            ..color = color
+            ..strokeWidth = strokeWidth
+            ..style = style
           //..strokeCap = StrokeCap.round
           ;
-      //--Vẽ nền trong
       path.addOval(Rect.fromCircle(
         center: Offset(dx, dy),
-        radius: 150,
+        radius: radius,
       ));
-      canvas.drawPath(path, paintBackground);
-
-      //--vẽ vòng tròn to
-      path.addOval(Rect.fromCircle(
-        center: Offset(dx, dy),
-        radius: 150,
-      ));
-      canvas.drawPath(path, paintCircle);
+      canvas.drawPath(path, paint);
     }
+    //--Vẽ nền bên trong
+    veHinhTron(color: const Color(0xFF353763),style: PaintingStyle.fill,radius: 150);
+    //--Vẽ hình tròn to bo bên ngoài
+    veHinhTron(color:  Colors.white,strokeWidth: 20,style: PaintingStyle.stroke,radius: 150);
 
-    veNen();
-
-    //--Vẽ kim giờ
-    void veKimGio() {
+    
+    //--Vẽ kim
+    void veKim(
+        {double doDaiKim = 0,
+        double strokeWidth = 16,
+        Color color = Colors.red,
+        double degree = 0}) {
       final Path path = Path();
-
       final Paint paint = Paint()
-        ..color = Colors.pink
-        ..strokeWidth = 16
+        ..color = color
+        ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round;
-      double degree = dateTime.hour * 30 + 30 * dateTime.minute / 60;
+      //double degree = dateTime.hour * 30 + 30 * dateTime.minute / 60;
       path.moveTo(dx, dy);
-      path.lineTo(
-          dx +
-              doDaiKimGio * sin(degree),
-          dy -
-              doDaiKimGio *
-                  cos(degree));
+      path.lineTo(dx + doDaiKim * sin(degree), dy - doDaiKim * cos(degree));
       canvas.drawPath(path, paint);
     }
 
-    veKimGio();
+//--Vẽ kim giờ
+    veKim(
+        doDaiKim: doDaiKimGio,
+        strokeWidth: 16,
+        color: Colors.red,
+        degree: (dateTime.hour * 30 + 30 * dateTime.minute / 60));
 
     //--Vẽ kim phút
-    void vePhut() {
-      final Path path = Path();
-
-      final Paint paint = Paint()
-        ..color = const Color(0xFF5055f5)
-        ..strokeWidth = 12
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round;
-       double degree =dateTime.minute * 6;
-      path.moveTo(dx, dy);
-      path.lineTo(dx + doDaiKimPhut * sin(degree),
-          dy - doDaiKimPhut * cos(degree));
-      canvas.drawPath(path, paint);
-    }
-
-    vePhut();
+    veKim(
+        doDaiKim: doDaiKimPhut,
+        strokeWidth: 12,
+        color: const Color(0xFF5055f5),
+        degree: dateTime.minute * 6);
 
     //-- Vẽ kim giây
-    void veKimGiay() {
-      final Path path = Path();
+    veKim(
+        doDaiKim: doDaiKimGiay,
+        strokeWidth: 8,
+        color: Colors.yellow,
+        degree: dateTime.second * 6);
 
-      final Paint paint = Paint()
-        ..color = Colors.yellow
-        ..strokeWidth = 8
-        ..style = PaintingStyle.stroke
-        ..strokeCap = StrokeCap.round;
-      double degree =dateTime.second * 6;
-      path.moveTo(dx, dy);
-      path.lineTo(dx + doDaiKimGiay * sin(degree),
-          dy - doDaiKimGiay * cos(degree));
-      canvas.drawPath(path, paint);
-    }
-
-    veKimGiay();
-
-    //--Vẽ tâm đồng hồ
-    void veTam() {
-      final Path path = Path();
-
-      final Paint paint = Paint()
-            ..color = Colors.white
-            ..strokeWidth = 20
-            ..style = PaintingStyle.stroke
-          //..strokeCap = StrokeCap.round
-          ;
-
-      path.addOval(Rect.fromCircle(
-        center: Offset(dx, dy),
-        radius: 10,
-      ));
-      canvas.drawPath(path, paint);
-      //
-    }
-
-    veTam();
+    //--Vẽ hình tròn tâm đồng hồ
+    veHinhTron(color: Colors.white,style: PaintingStyle.fill,radius: 20);
+    
 
     //--Vẽ các đường gạch  bên ngoài
     void veDuongGach() {
