@@ -1,32 +1,50 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'cart.dart';
 
-void main(List<String> args) {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
-    );
+class ShoppingProvider with ChangeNotifier {
+  GlobalKey cartKey = GlobalKey();
+  void addItem(Item item) {
+   
+    List<Item> list = [...valueNotifier.value];
+    list.add(item);
+    valueNotifier.value = list;
+     streamController.add(item);
   }
+
+  void removeItem(Item item) {
+    List<Item> list = [...valueNotifier.value];
+    list.removeWhere((element) => element == item);
+    valueNotifier.value = list;
+  }
+
+  // @override
+  // notifyListeners();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+//List<Item> cart = [];
+
+class ShoppingPage extends StatefulWidget {
+  const ShoppingPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ShoppingPage> createState() => _ShoppingPageState();
 }
 
-ValueNotifier<List<Item>> card = ValueNotifier<List<Item>>([]);
+ValueNotifier<List<Item>> valueNotifier = ValueNotifier<List<Item>>([]);
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ShoppingPageState extends State<ShoppingPage> {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final shoppingProvider = Provider.of<ShoppingProvider>(context);
+
+    streamController.stream.listen(
+      (data) {
+        cartProvider.udpateCart(data);
+      },
+    );
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -35,9 +53,14 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               Stack(
                 children: [
-                  const Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 60,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/cartPage");
+                    },
+                    child: const Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 60,
+                    ),
                   ),
                   Positioned(
                     right: 0,
@@ -48,10 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.red,
                       ),
                       child: AnimatedBuilder(
-                        animation: card,
+                        animation: valueNotifier,
                         builder: (BuildContext context, Widget? child) {
                           return Text(
-                            card.value.length.toString(),
+                            valueNotifier.value.length.toString(),
                             style: const TextStyle(fontSize: 14),
                           );
                         },
@@ -79,10 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       right: 0,
                       child: InkWell(
                         onTap: () {
-                          List<Item> list = [...card.value];
-                          list.add(items[index]);
-                          card.value = list;
-                          // print(card.value.length);
+                          
+                         
+                           shoppingProvider.addItem(items[index]);
                         },
                         child: const Icon(
                           Icons.add_circle,
@@ -120,3 +142,6 @@ class Item {
 
   Item({required this.id, required this.name});
 }
+
+StreamController streamController = StreamController<Item>.broadcast();
+// Map<Item, int> map = <Item, int>{};
