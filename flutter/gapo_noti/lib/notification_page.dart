@@ -15,11 +15,11 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<Datas>(
+      body: FutureBuilder<bool>(
         future: readJsonData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-             datas = snapshot.data;
+             //datas = snapshot.data;
             // print(snapshot.data);
             return CustomScrollView(
               slivers: [

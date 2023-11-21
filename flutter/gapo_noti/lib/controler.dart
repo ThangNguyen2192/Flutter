@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'modal.dart';
 
-Future<Datas> readJsonData() async {
+Future<bool> readJsonData() async {
   // Đường dẫn đầy đủ của tệp .json
   String jsonPath = 'assets/json/noti.json';
 
@@ -14,7 +14,9 @@ Future<Datas> readJsonData() async {
     Map<String, dynamic> data = json.decode(jsonData);
 
     // In ra dữ liệu
-    return Datas.fromJson(data);
+    datas = Datas.fromJson(data);
+    return true;
+    //return Datas.fromJson(data);
   } catch (e) {
     // Xử lý lỗi nếu có
     throw Exception("Error load data");
