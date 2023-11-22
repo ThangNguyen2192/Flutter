@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gapo_noti/controler.dart';
-import 'package:gapo_noti/view.dart';
-
-import 'modal.dart';
+import '../controler.dart';
+import '../modal.dart';
+import '../view.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -19,6 +18,26 @@ class _SearchPageState extends State<SearchPage> {
   void dispose() {
     _textController.dispose();
     super.dispose();
+  }
+
+  void onChanged(String str) {
+    List<Data> list1 = [
+      ...datas.listData!.where(
+        (element) {
+          String text = element.message!.text.toString();
+          String textKhongDau = element.message!.textKhongDau.toString();
+          for (var s in str.split(" ")) {
+            if (!text.toLowerCase().contains(s.toLowerCase()) &&
+                !textKhongDau.toLowerCase().contains(s.toLowerCase())) {
+              return false;
+            }
+          }
+
+          return true;
+        },
+      )
+    ];
+    searchData.value = list1;
   }
 
   @override
@@ -46,29 +65,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Center(
                     child: TextField(
                       controller: _textController,
-                      onChanged: (value) {
-                        List<Data> list1 = [
-                          ...datas.listData!.where((element) {
-                            String text = element.message!.text.toString();
-                            String textKhongDau =
-                                element.message!.textKhongDau.toString();
-                            for (var s in value.split(" ")) {
-                              if (!text
-                                      .toLowerCase()
-                                      .contains(s.toLowerCase()) &&
-                                  !textKhongDau
-                                      .toLowerCase()
-                                      .contains(s.toLowerCase())) {
-                                return false;
-                              }
-                            }
-
-                            return true;
-                          })
-                        ];
-                        searchData.value = list1;
-
-                      },
+                      onChanged:(value) => onChanged(value),
                       textAlignVertical: TextAlignVertical.top,
                       maxLines: 1,
                       style: const TextStyle(fontSize: 20),
@@ -91,7 +88,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              NotificationWidget(listdata: searchData.value)
+              Notifications(listdata: searchData.value)
             ],
           );
         },

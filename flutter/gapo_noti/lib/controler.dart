@@ -7,6 +7,7 @@ Future<bool> readJsonData() async {
   String jsonPath = 'assets/json/noti.json';
 
   try {
+    
     // Đọc nội dung từ tệp .json
     String jsonData = await rootBundle.loadString(jsonPath);
 
@@ -15,6 +16,8 @@ Future<bool> readJsonData() async {
 
     // In ra dữ liệu
     datas = Datas.fromJson(data);
+
+    await Future.delayed(Duration(seconds: 1));
     return true;
     //return Datas.fromJson(data);
   } catch (e) {
@@ -24,3 +27,16 @@ Future<bool> readJsonData() async {
 }
 
 Datas datas = Datas();
+
+String formatDateTime(DateTime dateTime, String format) {
+  format = format.replaceAll("dd", dateTime.day.toString().padLeft(2, "0"));
+  format = format.replaceAll("MM", dateTime.month.toString().padLeft(2, "0"));
+  format = format.replaceAll("yyyy", dateTime.year.toString());
+  format = format.replaceAll("yy", dateTime.year.toString().substring(2));
+
+  format = format.replaceAll("hh", dateTime.hour.toString().padLeft(2, "0"));
+  format = format.replaceAll("mm", dateTime.month.toString().padLeft(2, "0"));
+  format = format.replaceAll("ss", dateTime.second.toString().padLeft(2, "0"));
+
+  return format;
+}
