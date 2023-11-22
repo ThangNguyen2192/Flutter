@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controler.dart';
 import '../modal.dart';
-import '../view.dart';
+import '../notification.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
